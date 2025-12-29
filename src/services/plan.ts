@@ -22,7 +22,7 @@ export const approvePlan = async(id:string)=>{
 };
 
 export const rejectPlan = async(id:string)=>{
-    const res = await api.put(`/plans/${id}/reject`);
+    const res = await api.patch(`/plans/${id}/reject`);
     return res.data;
 };
 
