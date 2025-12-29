@@ -1,3 +1,4 @@
+import { register } from "../services/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,12 +17,39 @@ export default function Register(){
 
       
         try {
+           const data ={name, email, password, role};
+           await register(data);
+           alert("registration successful");
+           navigate("/login"); 
             
-            
-        } catch (error) {
-            
+        } catch (err) {
+            console.error(err);
+            alert("Failed to register user");
         }
-    }
+    };
 
 
+    return(
+        <div>
+            <h1>Register</h1>
+
+            <input placeholder="name"
+            value={name}
+            onChange={(e)=> setName(e.target.value)}
+            />
+
+            <input placeholder="email"
+            value={email}
+            onChange={(e)=> setEmail(e.target.value)}
+            />
+
+            <input placeholder="password"
+            value={password}
+            onChange={(e)=> setPassword(e.target.value)}
+            />
+
+            <button onClick={handleRegister}>Register</button>
+
+        </div>
+    );
 }
