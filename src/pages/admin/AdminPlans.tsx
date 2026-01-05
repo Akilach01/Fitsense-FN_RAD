@@ -16,7 +16,7 @@ export default function AdminPlans(){
 
 
     return(
-        <div>
+        <div className="bg-white p-4 rounded shadow mb-3">
             <h2>All Plans</h2>
 
             {plans.map((p) => (
@@ -27,8 +27,10 @@ export default function AdminPlans(){
 
           {p.status === "pending" && (
             <>
+            <div className="flex gap-2 mt-2">
             <button onClick={()=>approvePlan(p._id).then(loadPlans)}>Approve</button>
              <button onClick={()=>rejectPlan(p._id).then(loadPlans)}>Reject</button>
+            </div>
             </>
           )}
            </div>
