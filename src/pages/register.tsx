@@ -30,31 +30,23 @@ export default function Register(){
 
 
     return(
-        <div>
-            <h1>Register</h1>
+         <div className="flex justify-center items-center h-screen">
+    <form className="bg-white p-6 rounded shadow w-96">
+      <h2 className="text-xl font-bold mb-4 text-center">Register</h2>
 
-            <input placeholder="name"
-            value={name}
-            onChange={(e)=> setName(e.target.value)}
-            />
 
-            <input placeholder="email"
-            value={email}
-            onChange={(e)=> setEmail(e.target.value)}
-            />
+      <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+    
+       <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
 
-            <input placeholder="password"
-            value={password}
-            onChange={(e)=> setPassword(e.target.value)}
-            />
+     <button className="w-full" onClick={handleRegister}>Register</button>
 
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-            </select>
-
-            <button onClick={handleRegister}>Register</button>
-
+        </form>
         </div>
     );
 }
