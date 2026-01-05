@@ -32,12 +32,29 @@ navigate("/home");
 };
 
 return(
-    <div className="p-8">
-      <h1>Login</h1>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
-    </div>
+    <div className="flex justify-center items-center h-screen">
+    <form className="bg-white p-6 rounded shadow w-80">
+      <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
+
+        <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      
+        <button onClick={handleLogin} className="w-full">
+        Login
+      </button>
+    </form>
+  </div>
 );
 }
 
