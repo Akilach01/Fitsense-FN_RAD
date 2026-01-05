@@ -30,11 +30,12 @@ const RequireAuth = ({children, role}:any)=>{
         return(
             <BrowserRouter>
             <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path ="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
                 <Route element={<RequireAuth><Layout /></RequireAuth>}>
-                <Route path="/home" element={<Home />} />
+                {/* <Route path="/home" element={<Home />} /> */}
 
                 <Route
                     path="/plans/create"
