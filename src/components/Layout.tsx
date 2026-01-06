@@ -10,7 +10,7 @@ export default function Layout(){
 
 
             {/* Page Content*/ }
-            <main className="flex-1">
+            <main className="flex-1 container mx-auto p-4">
                 <Outlet></Outlet>
             </main>
         </div>
