@@ -10,7 +10,7 @@ export default function Layout(){
 
 
             {/* Page Content*/ }
-            <main className="flex-1 container mx-auto p-4">
+            <main className="flex-1 container mx-auto p-4 py-6">
                 <Outlet></Outlet>
             </main>
         </div>
