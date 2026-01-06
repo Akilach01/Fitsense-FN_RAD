@@ -33,14 +33,16 @@ navigate("/home");
 
 return(
     <div className="flex justify-center items-center h-screen">
-    <form className="bg-white p-6 rounded shadow w-80">
-      <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
+    <form className="bg-white p-6 rounded shadow w-80 space-y-2">
+      <h2 className="text-2xl font-bold text-gray-800 mb-1">Welcome back</h2>
+      <h2 className="text-xl font-bold mb-4 text-center">Log in to continue your fitness journey</h2>
 
         <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+         className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
 
       <input
@@ -48,9 +50,10 @@ return(
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+         className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
       
-        <button onClick={handleLogin} className="w-full">
+        <button onClick={handleLogin} className="w-full bg-indigo-600 text-white py-3 rounded-xl font-medium hover:bg-indigo-700 transition">
         Login
       </button>
     </form>
