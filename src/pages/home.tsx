@@ -11,51 +11,61 @@ export default function Home() {
     return (
       <div className="space-y-10">
         {/* HERO SECTION */}
-       <section className="grid md:grid-cols-2 gap-12 items-center">
-  {/* LEFT – TEXT */}
-  <div className="max-w-xl">
-    <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
-      Plan Smarter. <br />
-      Train Better. <br />
-      <span className="text-blue-600">Live Healthier.</span>
-    </h1>
+       <section className="relative overflow-hidden rounded-3xl">
+  {/* BACKGROUND IMAGE */}
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{
+      backgroundImage:
+        "url('https://as1.ftcdn.net/jpg/03/29/60/84/1000_F_329608479_vP9nFK795X8lWmoTa8DPhMgoewQ7U1lG.jpg')"
+    }}
+  />
 
-    <p className="mt-6 text-gray-600 text-lg">
-      FitSense helps you create personalized fitness plans, track
-      progress, and stay consistent — all in one place.
-    </p>
+  {/* OVERLAY */}
+  <div className="absolute inset-0 bg-white/60 backdrop-blur-sm" />
 
-    <div className="mt-8 flex gap-5">
-      <Link
-        to="/register"
-        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-      >
-        Get Started
-      </Link>
-      <Link
-        to="/login"
-        className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
-      >
-        Login
-      </Link>
+  {/* CONTENT */}
+  <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center p-10 md:p-16">
+    {/* LEFT – TEXT */}
+    <div className="max-w-xl">
+      <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+        Plan Smarter. <br />
+        Train Better. <br />
+        <span className="text-blue-600">Live Healthier.</span>
+      </h1>
+
+      <p className="mt-6 text-gray-600 text-lg">
+        FitSense helps you create personalized fitness plans, track
+        progress, and stay consistent — all in one place.
+      </p>
+
+      <div className="mt-8 flex gap-5">
+        <Link
+          to="/register"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow"
+        >
+          Get Started
+        </Link>
+        <Link
+          to="/login"
+          className="px-6 py-3 border border-black-300 rounded-lg hover:bg-gray-100 transition"
+        >
+          Login
+        </Link>
+      </div>
+    </div>
+
+    {/* RIGHT – IMAGE CARD */}
+    <div className="flex justify-center">
+      <img
+        src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b"
+        alt="Fitness"
+        className="w-full max-w-md rounded-2xl shadow-2xl object-cover"
+      />
     </div>
   </div>
-
-  {/* RIGHT – IMAGE */}
-  <div className="flex justify-center">
-    <img
-      src="https://as1.ftcdn.net/jpg/03/29/60/84/1000_F_329608479_vP9nFK795X8lWmoTa8DPhMgoewQ7U1lG.jpg"
-      alt="Fitness"
-      className="
-        w-full
-        max-w-md
-        rounded-2xl
-        shadow-xl
-        object-fit
-      "
-    />
-  </div>
 </section>
+
 
 
         {/* ABOUT SECTION */}

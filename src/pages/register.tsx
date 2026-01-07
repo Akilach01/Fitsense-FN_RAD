@@ -29,24 +29,159 @@ export default function Register(){
     };
 
 
-    return(
-         <div className="flex justify-center items-center h-screen">
-    <form className="bg-white p-6 rounded shadow w-96 space-y-2">
-      <h2 className="text-xl font-bold mb-4 text-center">Create a Account</h2>
+   return (
+  <div className="relative min-h-screen flex items-center justify-center">
+    {/* BACKGROUND IMAGE */}
+    <div
+      className="absolute inset-0 bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://media.istockphoto.com/id/1758416916/photo/excercise-equipment-in-a-modern-gym.jpg?s=612x612&w=0&k=20&c=m6kXcTSXHboGOMUFjgVd0-YQi77Vq_gcrtt80obfDFg=')"
+      }}
+    />
 
+    {/* OVERLAY */}
+    <div className="absolute inset-0 bg-black/60" />
 
-      <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-      <input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-    
-       <select value={role} onChange={(e) => setRole(e.target.value)}className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-      </select>
+    {/* REGISTER CARD */}
+    <form
+      onSubmit={handleRegister}
+      className="
+        relative z-10
+        w-full max-w-md
+        bg-white/90
+        backdrop-blur-md
+        rounded-3xl
+        shadow-2xl
+        p-10
+        space-y-6
+      "
+    >
+      {/* HEADER */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-gray-800">
+          Create Account 
+        </h2>
+        <p className="text-gray-600 mt-2">
+          Start your fitness journey with FitSense
+        </p>
+      </div>
 
-     <button className="w-full bg-indigo-600 text-white py-3 rounded-xl font-medium hover:bg-indigo-700 transition" onClick={handleRegister}>Register</button>
+      {/* NAME */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Name
+        </label>
+        <input
+          placeholder="John Doe"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="
+            w-full
+            px-4 py-3
+            border border-gray-300
+            rounded-xl
+            focus:outline-none
+            focus:ring-2
+            focus:ring-indigo-500
+          "
+        />
+      </div>
 
-        </form>
-        </div>
-    );
+      {/* EMAIL */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Email
+        </label>
+        <input
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="
+            w-full
+            px-4 py-3
+            border border-gray-300
+            rounded-xl
+            focus:outline-none
+            focus:ring-2
+            focus:ring-indigo-500
+          "
+        />
+      </div>
+
+      {/* PASSWORD */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Password
+        </label>
+        <input
+          type="password"
+          placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="
+            w-full
+            px-4 py-3
+            border border-gray-300
+            rounded-xl
+            focus:outline-none
+            focus:ring-2
+            focus:ring-indigo-500
+          "
+        />
+      </div>
+
+      {/* ROLE */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Account Type
+        </label>
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          className="
+            w-full
+            px-4 py-3
+            border border-gray-300
+            rounded-xl
+            focus:outline-none
+            focus:ring-2
+            focus:ring-indigo-500
+          "
+        >
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      {/* BUTTON */}
+      <button
+        type="submit"
+        className="
+          w-full
+          bg-indigo-600
+          text-white
+          py-3
+          rounded-xl
+          font-semibold
+          text-lg
+          hover:bg-indigo-700
+          transition
+          shadow-lg
+        "
+      >
+        Register
+      </button>
+
+      {/* FOOTER */}
+      <p className="text-center text-gray-600 text-sm">
+        Already have an account?{" "}
+        <a href="/login" className="text-indigo-600 font-medium hover:underline">
+          Login
+        </a>
+      </p>
+    </form>
+  </div>
+);
+ 
 }
