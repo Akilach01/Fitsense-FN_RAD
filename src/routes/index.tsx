@@ -9,6 +9,9 @@ import Register from "../pages/register";
 import Home from "../pages/home";
 import CreatePlan from "../pages/plans/CreatePlan";
 import Layout from "../components/Layout";
+import UserDashboard from "../pages/userDashboard";
+import AdminDashboard from "../pages/adminDashboard";
+import MyPlans from "../pages/plans/MyPlans";
 
 
 
@@ -19,7 +22,7 @@ const RequireAuth = ({children, role}:any)=>{
     if (!user) return <Navigate to="/login"/>;
 
     if (role && user.role !== role) {
-        return <p>Access denied</p>;   
+        return <Navigate to="/" />;   
     }
 
     return children;
@@ -28,36 +31,44 @@ const RequireAuth = ({children, role}:any)=>{
 
      export default function Router(){
         return(
-            <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path ="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+           <BrowserRouter>
+      <Routes>
 
-                <Route element={<RequireAuth><Layout /></RequireAuth>}>
-                {/* <Route path="/home" element={<Home />} /> */}
+        {/* PUBLIC */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-                <Route
-                    path="/plans/create"
-                    element={<RequireAuth role="user"><CreatePlan /></RequireAuth>}
-                />
+        {/* USER ROUTES */}
+        <Route
+          element={
+            <RequireAuth role="user">
+              <Layout />
+            </RequireAuth>
+          }
+        >
+          <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/plans/create" element={<CreatePlan />} />
+          <Route path="/plans/me" element={<MyPlans />} />
+        </Route>
 
-                 <Route
-                    path="/plans/me"
-                    element={<RequireAuth role="user"><Myplans /></RequireAuth>}
-                />
+        {/* ADMIN ROUTES */}
+        <Route
+          element={
+            <RequireAuth role="admin">
+              <Layout />
+            </RequireAuth>
+          }
+        >
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/plans" element={<AdminPlans />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+        </Route>
 
-                 <Route
-                    path="/admin/plans"
-                    element={<RequireAuth role="admin"><AdminPlans /></RequireAuth>}
-                />
+        {/* FALLBACK */}
+        <Route path="*" element={<Navigate to="/" replace />} />
 
-                 <Route
-                    path="/admin/users"
-                    element={<RequireAuth role="admin"><AdminUsers /></RequireAuth>}
-                />
-                </Route>
-            </Routes>
-            </BrowserRouter>
+      </Routes>
+    </BrowserRouter> 
         );  
     }

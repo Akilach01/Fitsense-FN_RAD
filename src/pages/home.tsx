@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import Header from "../components/Header";
+
 
 export default function Home() {
   const { user } = useAuth();
@@ -26,6 +28,7 @@ export default function Home() {
 
   {/* CONTENT */}
   <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center p-10 md:p-16">
+    
     {/* LEFT – TEXT */}
     <div className="max-w-xl">
       <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">

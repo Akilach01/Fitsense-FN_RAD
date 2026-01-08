@@ -23,7 +23,12 @@ localStorage.setItem("token",res.token);
 const me = await getMyDetails();
 setUser(me.user);
 
-navigate("/home");
+//role based redirect
+ if (me.user.role === "admin") {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/user/dashboard");
+    }
     
 } catch (err) {
     alert("Invalid email or password");
