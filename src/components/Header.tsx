@@ -38,6 +38,7 @@ export default function Header() {
 
           {user?.role === "user" && (
             <>
+              <Link to="/user/dashboard">Dashboard</Link>
               <Link to="/plans/create" className="hover:text-blue-600">
                 Create Plan
               </Link>
@@ -49,6 +50,7 @@ export default function Header() {
 
           {user?.role === "admin" && (
             <>
+              <Link to="/admin/dashboard">Admin</Link>
               <Link to="/admin/plans" className="hover:text-blue-600">
                 Plans
               </Link>

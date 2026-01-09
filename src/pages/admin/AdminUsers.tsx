@@ -1,60 +1,60 @@
 import { useEffect, useState } from "react";
 import { deleteUser, getAllUsers } from "../../services/user";
 
+export default function AdminUsers() {
+  const [users, setUsers] = useState<any[]>([]);
 
-export default function AdminUsers(){
-    const [users, setUsers] = useState<any[]>([]);
+  const loadUsers = async () => {
+    const res = await getAllUsers();
+    setUsers(res.users);
+  };
 
-    const loadUsers = async()=>{
-        const res =  await getAllUsers();
-        setUsers(res.users);
-    };
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
-    useEffect(()=>{
-        loadUsers();
+  return (
+    <div className="max-w-4xl mx-auto">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">
+        User Management 👥
+      </h2>
 
-    }, []);
+      {users.length === 0 && (
+        <p className="text-gray-500">No users found.</p>
+      )}
 
-    return (
-  <div className="max-w-3xl mx-auto mt-6">
-    <h2 className="text-2xl font-bold mb-4">All Users</h2>
+      <div className="space-y-4">
+        {users.map((u) => (
+          <div
+            key={u._id}
+            className="bg-white p-5 rounded-2xl shadow flex justify-between items-center"
+          >
+            <div>
+              <p className="font-semibold text-gray-800">{u.email}</p>
 
-    {users.length === 0 && (
-      <p className="text-gray-500">No users found.</p>
-    )}
+              <span
+                className={`inline-block mt-1 text-xs px-3 py-1 rounded-full font-medium
+                  ${
+                    u.role === "admin"
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
+              >
+                {u.role.toUpperCase()}
+              </span>
+            </div>
 
-    <div className="space-y-3">
-      {users.map((u) => (
-        <div
-          key={u._id}
-          className="bg-white p-4 rounded shadow flex justify-between items-center"
-        >
-          <div>
-            <p className="font-medium">{u.email}</p>
-            <span
-              className={`text-sm px-2 py-1 rounded 
-                ${
-                  u.role === "admin"
-                    ? "bg-blue-100 text-blue-700"
-                    : "bg-gray-100 text-gray-700"
-                }`}
-            >
-              {u.role}
-            </span>
+            {u.role !== "admin" && (
+              <button
+                onClick={() => deleteUser(u._id).then(loadUsers)}
+                className="bg-red-600 text-white px-4 py-2 rounded-xl font-medium hover:bg-red-700 transition"
+              >
+                Delete
+              </button>
+            )}
           </div>
-
-          {u.role !== "admin" && (
-            <button
-              onClick={() => deleteUser(u._id).then(loadUsers)}
-              className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-            >
-              Delete
-            </button>
-          )}
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-);
-
+  );
 }

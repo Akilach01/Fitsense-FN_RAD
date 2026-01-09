@@ -2,16 +2,15 @@
 import { useAuth } from "../context/authContext";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "../pages/login";
-import Myplans from "../pages/plans/MyPlans";
 import AdminPlans from "../pages/admin/AdminPlans";
 import AdminUsers from "../pages/admin/AdminUsers";
 import Register from "../pages/register";
 import Home from "../pages/home";
 import CreatePlan from "../pages/plans/CreatePlan";
 import Layout from "../components/Layout";
-import UserDashboard from "../pages/userDashboard";
 import AdminDashboard from "../pages/adminDashboard";
 import MyPlans from "../pages/plans/MyPlans";
+import UserDashboard from "../pages/userDashboard";
 
 
 
@@ -39,31 +38,17 @@ const RequireAuth = ({children, role}:any)=>{
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* USER ROUTES */}
-        <Route
-          element={
-            <RequireAuth role="user">
-              <Layout />
-            </RequireAuth>
-          }
-        >
-          <Route path="/dashboard" element={<UserDashboard />} />
-          <Route path="/plans/create" element={<CreatePlan />} />
-          <Route path="/plans/me" element={<MyPlans />} />
-        </Route>
+        <Route element={<RequireAuth><Layout /></RequireAuth>}>
+      {/* User */}
+      <Route path="/user/dashboard" element={<RequireAuth role="user"><UserDashboard /></RequireAuth>} />
+      <Route path="/plans/create" element={<RequireAuth role="user"><CreatePlan /></RequireAuth>} />
+      <Route path="/plans/me" element={<RequireAuth role="user"><MyPlans /></RequireAuth>} />
 
-        {/* ADMIN ROUTES */}
-        <Route
-          element={
-            <RequireAuth role="admin">
-              <Layout />
-            </RequireAuth>
-          }
-        >
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/plans" element={<AdminPlans />} />
-          <Route path="/admin/users" element={<AdminUsers />} />
-        </Route>
+      {/* Admin */}
+      <Route path="/admin/dashboard" element={<RequireAuth role="admin"><AdminDashboard /></RequireAuth>} />
+      <Route path="/admin/plans" element={<RequireAuth role="admin"><AdminPlans /></RequireAuth>} />
+      <Route path="/admin/users" element={<RequireAuth role="admin"><AdminUsers /></RequireAuth>} />
+    </Route>
 
         {/* FALLBACK */}
         <Route path="*" element={<Navigate to="/" replace />} />

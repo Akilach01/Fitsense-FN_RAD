@@ -131,29 +131,6 @@ export default function Register(){
         />
       </div>
 
-      {/* ROLE */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Account Type
-        </label>
-        <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          className="
-            w-full
-            px-4 py-3
-            border border-gray-300
-            rounded-xl
-            focus:outline-none
-            focus:ring-2
-            focus:ring-indigo-500
-          "
-        >
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-
       {/* BUTTON */}
       <button
         type="submit"
