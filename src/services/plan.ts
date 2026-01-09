@@ -7,22 +7,27 @@ export const createPlan = async(data:any)=>{
 };
 
 export const getMyPlans = async()=>{
-    const res = await api.get("/plans/me");
+    const res = await api.get("/plans/mine");
     return res.data;
 };
 
-export const getAllPlans = async()=>{
-    const res = await api.get("/plans");
-    return res.data;
+export const getAllPlans = async () => {
+  const res = await api.get("/admin/plans");
+  return res.data;
 };
 
-export const approvePlan = async(id:string)=>{
-    const res = await api.patch(`/plans/${id}/approve`);
-    return res.data;
+export const approvePlan = async (id: string) => {
+  const res = await api.put(`/admin/plans/${id}`, {
+    status: "approved",
+  });
+  return res.data;
 };
 
-export const rejectPlan = async(id:string)=>{
-    const res = await api.patch(`/plans/${id}/reject`);
-    return res.data;
+export const rejectPlan = async (id: string) => {
+  const res = await api.put(`/admin/plans/${id}`, {
+    status: "rejected",
+  });
+  return res.data;
 };
+
 

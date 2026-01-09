@@ -3,10 +3,18 @@ import { deleteUser, getAllUsers } from "../../services/user";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const loadUsers = async () => {
-    const res = await getAllUsers();
-    setUsers(res.users);
+    try {
+      const res = await getAllUsers();
+      console.log("Users response:", res);
+      setUsers(res.users || res || []);
+      setError(null);
+    } catch (err: any) {
+      console.error("Error loading users:", err);
+      setError(err.response?.data?.message || "Failed to load users");
+    }
   };
 
   useEffect(() => {
@@ -16,8 +24,14 @@ export default function AdminUsers() {
   return (
     <div className="max-w-4xl mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">
-        User Management 👥
+        User Management 
       </h2>
+
+      {error && (
+        <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+          {error}
+        </div>
+      )}
 
       {users.length === 0 && (
         <p className="text-gray-500">No users found.</p>

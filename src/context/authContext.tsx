@@ -17,8 +17,8 @@ export const AuthProvider =({children}:any)=>{
         .catch(()=>setUser(null))
         .finally(()=>setLoading(false));
     }else{
-    setLoading(false);    
-        
+        setUser(null);
+        setLoading(false);    
     }
 
  },[]);

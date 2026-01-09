@@ -1,17 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import Header from "../components/Header";
 
 
 export default function Home() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
-  // -------------------------------
-  // GUEST LANDING PAGE
-  // -------------------------------
-  if (!user) {
-    return (
-      <div className="space-y-10">
+  // Wait for auth to load
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
+
+  // Redirect logged-in users to their dashboards
+  if (user) {
+    if (user.role === "admin") {
+      return <Navigate to="/admin/dashboard" replace />;
+    }
+    return <Navigate to="/user/dashboard" replace />;
+  }
+
+  // Always show guest landing page if no user
+  return (
+    <div className="space-y-10">
         {/* HERO SECTION */}
        <section className="relative overflow-hidden rounded-3xl">
   {/* BACKGROUND IMAGE */}
@@ -130,112 +139,4 @@ export default function Home() {
         </section>
       </div>
     );
-  }
-
-  // -------------------------------
-  // LOGGED-IN DASHBOARD
-  // -------------------------------
-  return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="text-3xl font-bold">
-          Welcome back 
-        </h1>
-        <p className="text-gray-600 mt-1">
-          {user.email} ({user.role})
-        </p>
-      </div>
-
-      {/* USER DASHBOARD */}
-      {user.role === "user" && (
-  <div className="grid md:grid-cols-2 gap-8">
-    {/* Create Plan */}
-    <Link
-      to="/plans/create"
-      className="group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden"
-    >
-      <img
-        src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b"
-        alt="Create plan"
-        className="h-44 w-full object-cover group-hover:scale-105 transition"
-      />
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">
-          Create Fitness Plan
-        </h3>
-        <p className="text-gray-600">
-          Design and submit a personalized fitness plan for approval.
-        </p>
-      </div>
-    </Link>
-
-    {/* My Plans */}
-    <Link
-      to="/plans/me"
-      className="group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden"
-    >
-      <img
-        src="https://images.unsplash.com/photo-1550345332-09e3ac987658"
-        alt="My plans"
-        className="h-44 w-full object-cover group-hover:scale-105 transition"
-      />
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">
-          My Plans
-        </h3>
-        <p className="text-gray-600">
-          View your submitted plans and track approval status.
-        </p>
-      </div>
-    </Link>
-  </div>
-)}
-
-
-      {/* ADMIN DASHBOARD */}
-    {user.role === "admin" && (
-  <div className="grid md:grid-cols-2 gap-8">
-    {/* Manage Plans */}
-    <Link
-      to="/admin/plans"
-      className="group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden"
-    >
-      <img
-        src="https://images.unsplash.com/photo-1556761175-4b46a572b786"
-        alt="Admin plans"
-        className="h-44 w-full object-cover group-hover:scale-105 transition"
-      />
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">
-          Manage Fitness Plans
-        </h3>
-        <p className="text-gray-600">
-          Review, approve, or reject submitted fitness plans.
-        </p>
-      </div>
-    </Link>
-
-    {/* Manage Users */}
-    <Link
-      to="/admin/users"
-      className="group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden"
-    >
-      <img
-        src="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
-        alt="Manage users"
-        className="h-44 w-full object-cover group-hover:scale-105 transition"
-      />
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">
-          Manage Users
-        </h3>
-        <p className="text-gray-600">
-          View users, manage access, and remove accounts.
-        </p>
-      </div>
-    </Link>
-  </div>
-)}  
-    </div>
-  );
 }

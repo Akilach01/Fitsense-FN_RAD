@@ -33,11 +33,14 @@ const RequireAuth = ({children, role}:any)=>{
            <BrowserRouter>
       <Routes>
 
-        {/* PUBLIC */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* PUBLIC - with Layout */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
+        {/* PROTECTED - with Layout */}
         <Route element={<RequireAuth><Layout /></RequireAuth>}>
       {/* User */}
       <Route path="/user/dashboard" element={<RequireAuth role="user"><UserDashboard /></RequireAuth>} />

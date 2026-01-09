@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
-import { approvePlan, getAllPlans, rejectPlan } from "../../services/plan";
+import { getAllPlans, approvePlan, rejectPlan } from "../../services/plan";
 
 export default function AdminPlans() {
   const [plans, setPlans] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const loadPlans = async () => {
-    const res = await getAllPlans();
-    setPlans(res.plans);
+    try {
+      const res = await getAllPlans();
+      console.log("Plans response:", res);
+      setPlans(res.plans || res || []);
+      setError(null);
+    } catch (err: any) {
+      console.error("Error loading plans:", err);
+      setError(err.response?.data?.message || "Failed to load plans");
+    }
   };
 
   useEffect(() => {
@@ -18,6 +26,12 @@ export default function AdminPlans() {
       <h2 className="text-3xl font-bold mb-6 text-gray-800">
         Fitness Plans Approval 
       </h2>
+
+      {error && (
+        <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+          {error}
+        </div>
+      )}
 
       {plans.length === 0 && (
         <p className="text-gray-500">No plans submitted yet.</p>
@@ -57,14 +71,18 @@ export default function AdminPlans() {
             {p.status === "pending" && (
               <div className="flex gap-3 mt-4 md:mt-0">
                 <button
-                  onClick={() => approvePlan(p._id).then(loadPlans)}
+                 onClick={() =>
+                 approvePlan(p._id).then(loadPlans)
+                } 
                   className="px-4 py-2 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition"
                 >
                   Approve
                 </button>
 
                 <button
-                  onClick={() => rejectPlan(p._id).then(loadPlans)}
+                 onClick={() =>
+                 rejectPlan(p._id).then(loadPlans)
+                 }
                   className="px-4 py-2 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition"
                 >
                   Reject
