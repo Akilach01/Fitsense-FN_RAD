@@ -1,4 +1,4 @@
-import api from "./api";
+﻿import api from "./api";
 
 
 export const getAllUsers = async()=>{
@@ -7,7 +7,6 @@ export const getAllUsers = async()=>{
 };
 
 export const deleteUser = async (id:string)=>{
-    const res = await api.delete(`/users/${id}`);
+    const res = await api.delete(`/admin/users/${id}`);
     return res.data;
 };
-

@@ -3,9 +3,25 @@ import { getMyPlans } from "../../services/plan";
 
 export default function MyPlans() {
   const [plans, setPlans] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getMyPlans().then((res) => setPlans(res));
+    const loadPlans = async () => {
+      try {
+        const res = await getMyPlans();
+        console.log("My Plans response:", res);
+        setPlans(res.plans || res || []);
+        setError(null);
+      } catch (err: any) {
+        console.error("Error loading my plans:", err);
+        setError(err.response?.data?.message || "Failed to load plans");
+        setPlans([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPlans();
   }, []);
 
   return (
@@ -27,11 +43,22 @@ export default function MyPlans() {
              My Fitness Plans
           </h2>
 
-          {plans.length === 0 ? (
+          {error && (
+            <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+              {error}
+            </div>
+          )}
+
+          {loading && (
+            <p className="text-center text-gray-600">Loading plans...</p>
+          )}
+
+          {!loading && plans.length === 0 && (
             <p className="text-center text-gray-600">
-              You haven’t created any plans yet.
+              You haven't created any plans yet.
             </p>
-          ) : (
+          )}
+          {!loading && plans.length > 0 && (
             <div className="grid md:grid-cols-2 gap-6">
               {plans.map((p) => (
                 <div
