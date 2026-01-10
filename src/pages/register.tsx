@@ -62,8 +62,8 @@ export default function Register(){
         <h2 className="text-3xl font-bold text-gray-800">
           Create Account 
         </h2>
-        <p className="text-gray-600 mt-2">
-          Start your fitness journey with FitSense
+        <p className="text-gray-700 mt-3">
+          Start your fitness journey with <b>FitSense</b>
         </p>
       </div>
 
