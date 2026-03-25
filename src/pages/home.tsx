@@ -81,38 +81,51 @@ export default function Home() {
 
 
         {/* ABOUT SECTION */}
-        <section className="bg-white rounded-2xl shadow p-10">
+        <section className="bg-white rounded-2xl shadow-lg p-10">
           <h2 className="text-3xl font-bold text-center mb-8">
             Why Choose FitSense?
           </h2>
+          <p className="text-center text-gray-500 max-w-2xl mx-auto mb-10">
+            A professional, mobile-first fitness platform with intelligent plan building,
+            deeper personalization, and built-in quality checks.
+          </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">
-                Personalized Plans
-              </h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <article className="group bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transform transition duration-500 hover:-translate-y-2">
+              <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-blue-100 text-blue-600 mb-4 transition-all duration-500 group-hover:bg-blue-600 group-hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7 motion-safe:animate-pulse">
+                  <path d="M12 2a9 9 0 0 0-9 9c0 4.730 3.566 8.633 8.142 8.978l.858.022c4.97 0 9-4.03 9-9a9 9 0 0 0-9-9Zm-.75 4.5a1.5 1.5 0 1 1 3 0v4.25h1.5a1.5 1.5 0 1 1 0 3h-4.5a1.5 1.5 0 1 1 0-3h1.5V6.5Z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Personalized Plans</h3>
               <p className="text-gray-600">
-                Create fitness plans tailored to your goals and lifestyle.
+                Smart routines adapt to your fitness level, goals, and lifestyle reviews.
               </p>
-            </div>
+            </article>
 
-            <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">
-                AI-Assisted Descriptions
-              </h3>
+            <article className="group bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transform transition duration-500 hover:-translate-y-2">
+              <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-emerald-100 text-emerald-600 mb-4 transition-all duration-500 group-hover:bg-emerald-600 group-hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7 motion-safe:animate-pulse">
+                  <path d="M11.25 2.75a.75.75 0 0 1 1.5 0v2.7a.75.75 0 0 1-1.5 0V2.75Zm6.404 2.022a.75.75 0 1 1 1.06 1.06l-1.91 1.91a.75.75 0 1 1-1.06-1.06l1.91-1.91ZM19.25 11.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75Zm-2.586 6.78a.75.75 0 0 1 1.06 1.06l-1.91 1.91a.75.75 0 1 1-1.06-1.06l1.91-1.91ZM12 6.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Zm0 1.5a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/>
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">AI-Assisted Guidance</h3>
               <p className="text-gray-600">
-                Generate smart workout descriptions using AI assistance.
+                Generate concise exercise descriptions and technique notes automatically.
               </p>
-            </div>
+            </article>
 
-            <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">
-                Admin Approval System
-              </h3>
+            <article className="group bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transform transition duration-500 hover:-translate-y-2">
+              <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-indigo-100 text-indigo-600 mb-4 transition-all duration-500 group-hover:bg-indigo-600 group-hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7 motion-safe:animate-pulse">
+                  <path d="M12 2a7 7 0 0 0-4.95 11.95l-2.5 2.5a1 1 0 1 0 1.42 1.42l2.5-2.5A7 7 0 1 0 12 2Zm0 2a5 5 0 0 1 3.536 8.536l-1.768-1.768a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l2.5-2.5a.75.75 0 1 0-1.06-1.06l-1.768 1.768A5 5 0 1 1 12 4Zm.75 2.75a.75.75 0 0 0-1.5 0v3.5c0 .414.336.75.75.75h2a.75.75 0 0 0 0-1.5h-1.25V6.75Z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Admin Approval System</h3>
               <p className="text-gray-600">
-                Ensures quality plans through admin review and approval.
+                Trusted workout plans are verified so you can execute with confidence.
               </p>
-            </div>
+            </article>
           </div>
         </section>
 
