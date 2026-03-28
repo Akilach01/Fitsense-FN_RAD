@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 export default function UserDashboard() {
@@ -31,7 +30,7 @@ export default function UserDashboard() {
           </div>
 
           {/* ACTION CARDS */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {/* CREATE PLAN */}
             <div className="rounded-2xl border p-6 hover:shadow-lg transition">
               <h3 className="text-xl font-semibold text-gray-800">
@@ -61,6 +60,22 @@ export default function UserDashboard() {
                 className="inline-block mt-4 text-indigo-600 font-medium hover:underline"
               >
                 View My Plans →
+              </Link>
+            </div>
+
+            {/* AI ASSISTANT */}
+            <div className="rounded-2xl border p-6 hover:shadow-lg transition">
+              <h3 className="text-xl font-semibold text-gray-800">
+                🤖 AI Assistant
+              </h3>
+              <p className="text-gray-600 mt-2">
+                Get instant answers to your fitness questions from our AI.
+              </p>
+              <Link
+                to="/ai-assistant"
+                className="inline-block mt-4 text-indigo-600 font-medium hover:underline"
+              >
+                Ask AI →
               </Link>
             </div>
           </div>

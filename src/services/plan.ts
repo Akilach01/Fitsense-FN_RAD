@@ -28,3 +28,8 @@ export const rejectPlan = async (id: string) => {
   });
   return res.data;
 };
+
+export const reviewPlan = async (id: string, data: { status: string; feedback?: string; title?: string; description?: string; exercises?: string[] }) => {
+  const res = await api.put(`/admin/plans/${id}`, data);
+  return res.data;
+};

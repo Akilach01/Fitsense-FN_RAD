@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from "react";
-import { getAllPlans, approvePlan, rejectPlan } from "../../services/plan";
+import { getAllPlans, reviewPlan } from "../../services/plan";
 
 interface Plan {
   _id: string;
@@ -11,14 +11,126 @@ interface Plan {
   title: string;
   description: string;
   exercises: string[];
-  status: "PENDING" | "APPROVED" | "REJECTED";
+  status: "PENDING" | "APPROVED" | "REJECTED" | "NEEDS_UPDATE";
+  feedback?: string;
   createdAt: string;
+}
+
+interface ReviewModalProps {
+  plan: Plan | null;
+  onClose: () => void;
+  onSubmit: (data: any) => void;
+}
+
+function ReviewModal({ plan, onClose, onSubmit }: ReviewModalProps) {
+  const [status, setStatus] = useState(plan?.status || "PENDING");
+  const [feedback, setFeedback] = useState(plan?.feedback || "");
+  const [title, setTitle] = useState(plan?.title || "");
+  const [description, setDescription] = useState(plan?.description || "");
+  const [exercises, setExercises] = useState(plan?.exercises.join("\n") || "");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const exerciseArray = exercises.split("\n").filter(ex => ex.trim());
+    onSubmit({
+      status,
+      feedback: feedback.trim() || undefined,
+      title: title.trim() || undefined,
+      description: description.trim() || undefined,
+      exercises: exerciseArray.length > 0 ? exerciseArray : undefined,
+    });
+  };
+
+  if (!plan) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <h3 className="text-2xl font-bold mb-4">Review Plan: {plan.title}</h3>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Status</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value as any)}
+                className="w-full p-2 border rounded-lg"
+                required
+              >
+                <option value="APPROVED">Approve</option>
+                <option value="REJECTED">Reject</option>
+                <option value="NEEDS_UPDATE">Needs Update</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Feedback (required for Reject/Needs Update)</label>
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                className="w-full p-2 border rounded-lg h-24"
+                placeholder="Explain why the plan was rejected or what needs to be improved..."
+                required={status === "REJECTED" || status === "NEEDS_UPDATE"}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Title (optional edit)</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full p-2 border rounded-lg"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Description (optional edit)</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full p-2 border rounded-lg h-20"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Exercises (one per line, optional edit)</label>
+              <textarea
+                value={exercises}
+                onChange={(e) => setExercises(e.target.value)}
+                className="w-full p-2 border rounded-lg h-32"
+                placeholder="Exercise 1&#10;Exercise 2&#10;Exercise 3"
+              />
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                Submit Review
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function AdminPlans() {
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
   const loadPlans = async () => {
     try {
@@ -39,26 +151,18 @@ export default function AdminPlans() {
     loadPlans();
   }, []);
 
-  const handleApprove = async (planId: string) => {
+  const handleReview = async (data: any) => {
+    if (!selectedPlan) return;
+    
     try {
-      await approvePlan(planId);
+      await reviewPlan(selectedPlan._id, data);
       setPlans(plans.map(p =>
-        p._id === planId ? { ...p, status: "APPROVED" } : p
+        p._id === selectedPlan._id ? { ...p, ...data } : p
       ));
+      setSelectedPlan(null);
+      setError(null);
     } catch (err: any) {
-      setError("Failed to approve plan");
-      console.error(err);
-    }
-  };
-
-  const handleReject = async (planId: string) => {
-    try {
-      await rejectPlan(planId);
-      setPlans(plans.map(p =>
-        p._id === planId ? { ...p, status: "REJECTED" } : p
-      ));
-    } catch (err: any) {
-      setError("Failed to reject plan");
+      setError("Failed to review plan");
       console.error(err);
     }
   };
@@ -125,34 +229,40 @@ export default function AdminPlans() {
                       ? "bg-yellow-100 text-yellow-700"
                       : plan.status === "APPROVED"
                       ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-700"
+                      : plan.status === "REJECTED"
+                      ? "bg-red-100 text-red-700"
+                      : "bg-blue-100 text-blue-700"
                   }`}
                 >
                   {plan.status}
                 </span>
+                {plan.feedback && (
+                  <div className="mt-2 p-2 bg-gray-50 rounded text-sm text-gray-700">
+                    <strong>Feedback:</strong> {plan.feedback}
+                  </div>
+                )}
               </div>
 
               {plan.status === "PENDING" && (
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => handleApprove(plan._id)}
-                    className="px-4 py-2 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition"
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    onClick={() => handleReject(plan._id)}
-                    className="px-4 py-2 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition"
-                  >
-                    Reject
-                  </button>
-                </div>
+                <button
+                  onClick={() => setSelectedPlan(plan)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition"
+                >
+                  Review Plan
+                </button>
               )}
             </div>
           </div>
         ))}
       </div>
+
+      {selectedPlan && (
+        <ReviewModal
+          plan={selectedPlan}
+          onClose={() => setSelectedPlan(null)}
+          onSubmit={handleReview}
+        />
+      )}
     </div>
   );
 }

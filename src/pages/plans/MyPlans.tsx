@@ -84,11 +84,20 @@ export default function MyPlans() {
                         ? "bg-green-200 text-green-800"
                         : p.status === "REJECTED"
                         ? "bg-red-200 text-red-800"
+                        : p.status === "NEEDS_UPDATE"
+                        ? "bg-blue-200 text-blue-800"
                         : "bg-yellow-200 text-yellow-800"
                     }`}
                 >
                   {p.status}
                 </span>
+
+                {p.feedback && (
+                  <div className="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
+                    <p className="text-sm font-medium text-gray-700 mb-1">Admin Feedback:</p>
+                    <p className="text-sm text-gray-600">{p.feedback}</p>
+                  </div>
+                )}
                   
                 </div>
               ))}

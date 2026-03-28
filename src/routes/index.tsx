@@ -11,6 +11,7 @@ import Layout from "../components/Layout";
 import AdminDashboard from "../pages/adminDashboard";
 import MyPlans from "../pages/plans/MyPlans";
 import UserDashboard from "../pages/userDashboard";
+import AIAssistant from "../pages/AIAssistant";
 
 
 
@@ -46,6 +47,7 @@ const RequireAuth = ({children, role}:any)=>{
       <Route path="/user/dashboard" element={<RequireAuth role="user"><UserDashboard /></RequireAuth>} />
       <Route path="/plans/create" element={<RequireAuth role="user"><CreatePlan /></RequireAuth>} />
       <Route path="/plans/me" element={<RequireAuth role="user"><MyPlans /></RequireAuth>} />
+      <Route path="/ai-assistant" element={<RequireAuth role="user"><AIAssistant /></RequireAuth>} />
 
       {/* Admin */}
       <Route path="/admin/dashboard" element={<RequireAuth role="admin"><AdminDashboard /></RequireAuth>} />
